@@ -13,7 +13,7 @@ import java.util.Optional;
 import javax.mail.MessagingException;
 
 @Controller
-public class Authenticate {
+public class AuthenticateController {
 
     @Autowired
     private AuthenticateService authenticateService;

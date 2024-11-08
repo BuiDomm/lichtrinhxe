@@ -8,9 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HelloController {
+public class IndexController {
 
-    @GetMapping("/") // Mapping cho trang chính
+    @GetMapping({"/home", "/"}) // Mapping cho trang chính
     public String home(Model model) {
         model.addAttribute("message", "Welcome to my Spring Boot application!");
         return "index"; // Trả về tệp index.jsp trong /WEB-INF/views/
