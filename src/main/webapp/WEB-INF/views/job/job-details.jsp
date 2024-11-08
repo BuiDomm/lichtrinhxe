@@ -45,7 +45,7 @@
                     <div class="jbs-head-bodys-top my-5">
                         <div class="jbs-roots-y1 flex-column justify-content-start align-items-start">
                             <div class="jbs-roots-y1-last">
-                                <div class="jbs-urt mb-2"><span class="label text-light primary-2-bg">Full Time</span>
+                                <div class="jbs-urt mb-2"><span class="label text-light primary-2-bg">${job.workType}</span>
                                 </div>
                                 <div class="jbs-title-iop mb-1"><h2 class="m-0 fs-2 text-light">${job.jobTitle}</h2></div>
                                 <div class="jbs-locat-oiu text-sm-muted text-light d-flex align-items-center">
@@ -79,7 +79,7 @@
                             </div>
                             <div class="single-explot-last ps-2">
                                 <span class="text-light opacity-75">Department</span>
-                                <p class="text-light fw-bold fs-6 m-0">Software</p>
+                                <p class="text-light fw-bold fs-6 m-0">${job.jobCategory}</p>
                             </div>
                         </div>
                         <div class="single-explot d-flex align-items-center me-md-5 me-3 my-2">
@@ -88,7 +88,7 @@
                             </div>
                             <div class="single-explot-last ps-2">
                                 <span class="text-light opacity-75">Location</span>
-                                <p class="text-light fw-bold fs-6 m-0">Canada, USA</p>
+                                <p class="text-light fw-bold fs-6 m-0">${job.location}</p>
                             </div>
                         </div>
                         <div class="single-explot d-flex align-items-center">
@@ -97,7 +97,7 @@
                             </div>
                             <div class="single-explot-last ps-2">
                                 <span class="text-light opacity-75">Sallary</span>
-                                <p class="text-light fw-bold fs-6 m-0">$5000-$10,000 PA</p>
+                                <p class="text-light fw-bold fs-6 m-0">${job.salary} VND</p>
                             </div>
                         </div>
                     </div>
@@ -179,10 +179,10 @@
                                 <div class="jbs-content">
                                     <h6>Qualifications and Skills</h6>
                                     <ul class="colored-list">
-                                        <li>Bachelor's degree</li>
-                                        <li>BCA/MCA</li>
-                                        <li>BSC IT/Msc IT</li>
-                                        <li>Or any other equivalent degree</li>
+                                        <li>${job.skillsRequired}</li>
+                                        <li>${job.experienceRequired}</li>
+                                        <li>${job.educationRequired}</li>
+                                        <li>${job.languagesRequired}</li>
                                     </ul>
                                 </div>
                             </div>

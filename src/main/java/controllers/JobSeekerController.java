@@ -117,5 +117,10 @@ public class JobSeekerController {
         jobSeekerService.deleteJobSeeker(id);
         return "redirect:/jobseeker/index"; // Chuyển hướng sau khi xóa thành công
     }
+    // Create CV Page 
+        @GetMapping("/createcv")
+    public String createcv(Model model) {
+        return "jobseeker/createcv"; //
+    }
 
 }
