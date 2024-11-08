@@ -47,10 +47,9 @@
                             <div class="jbs-roots-y1-last">
                                 <div class="jbs-urt mb-2"><span class="label text-light primary-2-bg">Full Time</span>
                                 </div>
-                                <div class="jbs-title-iop mb-1"><h2 class="m-0 fs-2 text-light">Sr. Front-end
-                                    Designer</h2></div>
+                                <div class="jbs-title-iop mb-1"><h2 class="m-0 fs-2 text-light">${job.jobTitle}</h2></div>
                                 <div class="jbs-locat-oiu text-sm-muted text-light d-flex align-items-center">
-                                    <span><i class="fa-solid fa-location-dot opacity-75 me-1"></i>California, USA</span>
+                                    <span><i class="fa-solid fa-location-dot opacity-75 me-1"></i>${job.location}</span>
                                     <div class="jbs-kioyer-groups ms-3">
                                         <span class="fa-solid fa-star active"></span>
                                         <span class="fa-solid fa-star active"></span>
@@ -62,8 +61,7 @@
                                 </div>
                             </div>
                             <div class="jbs-roots-y6 py-3">
-                                <p class="text-light">We are looking for a experienced Senior Front-End Developer with
-                                    an advanced level of english to design UI/UX interface for web and mobile apps.</p>
+                                <p class="text-light">${job.jobDescription}.</p>
                             </div>
                             <div class="jbs-roots-y6 py-3">
                                 <button class="btn btn-primary fw-medium px-lg-5 px-4 me-3" type="button"

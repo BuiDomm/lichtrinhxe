@@ -171,7 +171,7 @@
                                     <div class="jbs-list-head">
                                         <div class="jbs-list-head-thunner">
                                             <div class="jbs-list-emp-thumb jbs-verified">
-                                                <a href="job-detail.html">
+                                                <a href="${pageContext.request.contextPath}/job/job-details/${job.id}">
                                                     <figure>
                                                         <!-- Hiển thị hình ảnh công ty, có thể thay đổi đường dẫn ảnh -->
                                                         <img src="../../assets/img/l-1.png" class="img-fluid" alt="">
@@ -186,7 +186,7 @@
                                                 <div class="jbs-job-title-wrap">
                                                     <!-- Hiển thị tên công việc -->
                                                     <h4>
-                                                        <a href="job-detail.html" class="jbs-job-title">${job.jobTitle}</a>
+                                                        <a href="${pageContext.request.contextPath}/job/job-details/${job.id}" class="jbs-job-title">${job.jobTitle}</a>
                                                     </h4>
                                                 </div>
                                             </div>

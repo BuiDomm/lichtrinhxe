@@ -19,9 +19,10 @@ public class JobController {
   @Autowired
   private JobsService JobsService;
   @GetMapping("/job-details/{id}")
-  public String jobDetails(@PathVariable Long id, Model model) {
+  public String jobDetails(@PathVariable String  id, Model model) {
     // Lấy thông tin chi tiết của công việc dựa trên ID
-    JobPosting job = JobsService.getJobById(id).orElse(null);
+    Integer jobId = Integer.parseInt(id);
+    JobPosting job = JobsService.getJobById(jobId).orElse(null);
 
     // Kiểm tra nếu không tìm thấy công việc nào với ID này
     if (job == null) {

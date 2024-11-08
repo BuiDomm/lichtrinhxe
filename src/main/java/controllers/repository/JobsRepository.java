@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 @Repository
-public interface JobsRepository  extends JpaRepository<JobPosting, Long> {
+public interface JobsRepository  extends JpaRepository<JobPosting, Integer> {
     @Query("SELECT j FROM JobPosting j JOIN FETCH j.employer")
     List<JobPosting> findAllWithEmployer();
 }

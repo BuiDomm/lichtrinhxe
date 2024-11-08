@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <div class="header header-light head-fixed">
     <div class="container">
         <nav id="navigation" class="navigation navigation-landscape">
