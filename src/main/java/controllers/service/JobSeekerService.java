@@ -20,7 +20,7 @@ public class JobSeekerService {
     }
 
     // Lấy JobSeeker theo ID
-    public Optional<JobSeeker> getJobSeekerById(Long id) {
+    public Optional<JobSeeker> getJobSeekerById(Integer id) {
         return jobSeekerRepository.findById(id);
     }
 
@@ -30,7 +30,7 @@ public class JobSeekerService {
     }
 
     // Cập nhật JobSeeker
-    public JobSeeker updateJobSeeker(Long id, JobSeeker updatedJobSeeker) {
+    public JobSeeker updateJobSeeker(Integer id, JobSeeker updatedJobSeeker) {
         if (jobSeekerRepository.existsById(id)) {
             updatedJobSeeker.setId(Math.toIntExact(id)); // Cập nhật ID để đảm bảo không thay đổi
             return jobSeekerRepository.save(updatedJobSeeker);
@@ -40,16 +40,14 @@ public class JobSeekerService {
 
     // Cập nhật JobSeeker
     public JobSeeker updateJobSeekerHp(Integer id, JobSeeker updatedJobSeeker) {
-        if (jobSeekerRepository.existsById(Long.valueOf(id))) {
+        if (jobSeekerRepository.existsById(id)) {
             return jobSeekerRepository.save(updatedJobSeeker); // Không cần cập nhật ID nữa
         }
         return null; // Trả về null nếu không tìm thấy JobSeeker để cập nhật
     }
 
-
-
     // Xóa JobSeeker
-    public boolean deleteJobSeeker(Long id) {
+    public boolean deleteJobSeeker(Integer id) {
         if (jobSeekerRepository.existsById(id)) {
             jobSeekerRepository.deleteById(id);
             return true;

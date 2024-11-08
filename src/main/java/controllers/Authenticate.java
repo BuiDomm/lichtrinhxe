@@ -63,33 +63,39 @@ public class Authenticate {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-        // Kiểm tra JobSeeker trước
-        JobSeeker jobSeeker = jobSeekerService.findByEmail(email);
-        if (jobSeeker != null) {
-            if (password.equals(jobSeeker.getPassword())) {
+    public String login(@RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String userType, // Nhận thêm userType từ form
+            HttpSession session,
+            Model model) {
+
+        // Kiểm tra theo loại người dùng (userType)
+        if ("jobSeeker".equals(userType)) {
+            // Xử lý nếu là Job Seeker
+            JobSeeker jobSeeker = jobSeekerService.findByEmail(email);
+            if (jobSeeker != null && password.equals(jobSeeker.getPassword())) {
                 // Nếu JobSeeker tồn tại và mật khẩu đúng, lưu vào session
                 session.setAttribute("user", jobSeeker);
-                session.setAttribute("userType", "jobSeeker"); // Đánh dấu người dùng là JobSeeker
+                session.setAttribute("userType", "jobSeeker");
                 return "redirect:/"; // Chuyển hướng đến trang chủ
             }
-        }
-
-        // Nếu không phải JobSeeker, kiểm tra Employer
-        Optional<Employer> employerOpt = employerService.getEmployerByEmail(email);
-        if (employerOpt.isPresent()) {
-            Employer employer = employerOpt.get();
-            if (password.equals(employer.getPassword())) {
-                // Nếu Employer tồn tại và mật khẩu đúng, lưu vào session
-                session.setAttribute("user", employer);
-                session.setAttribute("userType", "employer"); // Đánh dấu người dùng là Employer
-                return "redirect:/"; // Chuyển hướng đến trang chủ
+        } else if ("employer".equals(userType)) {
+            // Xử lý nếu là Employer
+            Optional<Employer> employerOpt = employerService.getEmployerByEmail(email);
+            if (employerOpt.isPresent()) {
+                Employer employer = employerOpt.get();
+                if (password.equals(employer.getPassword())) {
+                    // Nếu Employer tồn tại và mật khẩu đúng, lưu vào session
+                    session.setAttribute("user", employer);
+                    session.setAttribute("userType", "employer");
+                    return "redirect:/"; // Chuyển hướng đến trang chủ
+                }
             }
         }
 
         // Nếu không tìm thấy cả JobSeeker và Employer, hoặc mật khẩu không đúng
-        model.addAttribute("error", "Thông tin đăng nhập không chính xác!");
-        return "authenticate/login"; // Quay lại trang đăng nhập với thông báo lỗi
+        session.setAttribute("message", "Incorrect email or password!");
+        return "redirect:/login"; // Quay lại trang đăng nhập với thông báo lỗi
     }
 
     @GetMapping("/logout")
@@ -110,7 +116,7 @@ public class Authenticate {
         Optional<Employer> employer = employerService.getEmployerByEmail(email);
 
         // Nếu cả JobSeeker và Employer đều không tồn tại
-        if (jobSeeker == null && employer.isEmpty()) {
+        if (jobSeeker == null && employer.isPresent()) {
             session.setAttribute("message", "Email not found in the system!");
             return "redirect:/forgotpass";
         }
@@ -178,6 +184,7 @@ public class Authenticate {
             jobSeeker.setPassword(password);
             jobSeekerService.updateJobSeekerHp(jobSeeker.getId(), jobSeeker);
             session.setAttribute("message", "Password reset successful! Please log in with your new password.");
+            session.setAttribute("messageType", "success");
             return "redirect:/login";
         }
 
@@ -187,10 +194,12 @@ public class Authenticate {
             existingEmployer.setPassword(password);
             employerService.saveEmployer(existingEmployer);
             session.setAttribute("message", "Password reset successful! Please log in with your new password.");
+            session.setAttribute("messageType", "success");
             return "redirect:/login";
         }
 
         // Nếu email không tồn tại trong hệ thống
+        session.setAttribute("messageType", "error");
         session.setAttribute("message", "Email not found in the system!");
         return "redirect:/forgotpass";
     }
