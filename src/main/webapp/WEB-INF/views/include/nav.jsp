@@ -65,7 +65,7 @@
                             </button>
                             <div class="dropdown-menu pull-right animated flipInX">
                                 <div class="drp_menu_headr bg-primary">
-                                    <h4>Hi, Dhananjay</h4>
+                                    <h4>Hi, ${user.email}</h4>
                                     <div class="drp_menu_headr-right">
                                         <button type="button" class="btn btn-whites">Logout</button>
                                     </div>
@@ -97,82 +97,167 @@
                     <li><a href="/">Home<span class="submenu-indicator"></span></a>
 
                     </li>
+                    <c:choose>
+                        <c:when test="${not empty user}">
+                            <c:if test="${userType eq 'jobSeeker'}">
+                                <li><a href="JavaScript:Void(0);">For Candidate<span class="submenu-indicator"></span></a>
+                                    <ul class="nav-dropdown nav-submenu">
+                                        <li><a href="/job/job-list">Browse Jobs<span class="submenu-indicator"></span></a>
 
-                    <li><a href="JavaScript:Void(0);">For Candidate<span class="submenu-indicator"></span></a>
-                        <ul class="nav-dropdown nav-submenu">
-                            <li><a href="/job/job-list">Browse Jobs<span class="submenu-indicator"></span></a>
+                                        </li>
+                                        <li><a href="JavaScript:Void(0);">Browse Map Jobs<span class="submenu-indicator"></span></a>
+                                            <ul class="nav-dropdown nav-submenu">
+                                                <li><a href="half-map.html">Job Search on Map 01</a></li>
+                                                <li><a href="half-map-2.html">Job Search on Map 02</a></li>
+                                                <li><a href="half-map-3.html">Job Search on Map 03</a></li>
+                                                <li><a href="half-map-list-1.html">Job Search on Map 04</a></li>
+                                                <li><a href="half-map-list-2.html">Job Search on Map 05</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="JavaScript:Void(0);">Browse Candidate<span
+                                                    class="submenu-indicator"></span></a>
+                                            <ul class="nav-dropdown nav-submenu">
+                                                <li><a href="candidate-grid-1.html">Candidate Grid 01</a></li>
+                                                <li><a href="candidate-grid-2.html">Candidate Grid 02</a></li>
+                                                <li><a href="candidate-list-1.html">Candidate List 01</a></li>
+                                                <li><a href="candidate-list-2.html">Candidate List 02</a></li>
+                                                <li><a href="candidate-half-map.html">Candidate Half Map 01</a></li>
+                                                <li><a href="candidate-half-map-list.html">Candidate Half Map 02</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="JavaScript:Void(0);">Single job Detail<span
+                                                    class="submenu-indicator"></span></a>
+                                            <ul class="nav-dropdown nav-submenu">
+                                                <li><a href="single-layout-1.html">Single Layout 01</a></li>
+                                                <li><a href="single-layout-2.html">Single Layout 02</a></li>
+                                                <li><a href="single-layout-3.html">Single Layout 03</a></li>
+                                                <li><a href="single-layout-4.html">Single Layout 04</a></li>
+                                                <li><a href="single-layout-5.html">Single Layout 05<span
+                                                            class="new-update">New</span></a></li>
+                                                <li><a href="single-layout-6.html">Single Layout 06<span
+                                                            class="new-update">New</span></a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="JavaScript:Void(0);">Candidate Detail<span
+                                                    class="submenu-indicator"></span></a>
+                                            <ul class="nav-dropdown nav-submenu">
+                                                <li><a href="candidate-detail.html">Candidate Detail 01</a></li>
+                                                <li><a href="candidate-detail-2.html">Candidate Detail 02</a></li>
+                                                <li><a href="candidate-detail-3.html">Candidate Detail 03</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="advance-search.html">Advance Search</a></li>
+                                        <li>
+                                            <a href="/jobseeker">Candidate Dashboard<span
+                                                    class="new-update">New</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </c:if>
+                            <c:if test="${userType eq 'employer'}">
+                                <li><a href="JavaScript:Void(0);">For Employer<span class="submenu-indicator"></span></a>
+                                    <ul class="nav-dropdown nav-submenu">
+                                        <li><a href="JavaScript:Void(0);">Explore Employers<span
+                                                    class="submenu-indicator"></span></a>
+                                            <ul class="nav-dropdown nav-submenu">
+                                                <li><a href="/employer/employersearch1">Search Employers 01</a></li>
+                                                <li><a href="/employer/employersearch2">Search Employers 02</a></li>
+                                                <li><a href="/employer/employerlist">Search List Employers 01</a></li>
+                                                <li><a href="/employer/employersearchmap">Search Employers Map</a></li>
+                                                <li><a href="/employer/employersearchlistmap">Search List Employers Map</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="/employer/detail">Employer Detail</a>
+                                        </li>
+                                        <li>
+                                            <a href="/employer/dashboard">Employer Dashboard<span
+                                                    class="new-update">New</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </c:if>
 
-                            </li>
-                            <li><a href="JavaScript:Void(0);">Browse Map Jobs<span class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="half-map.html">Job Search on Map 01</a></li>
-                                    <li><a href="half-map-2.html">Job Search on Map 02</a></li>
-                                    <li><a href="half-map-3.html">Job Search on Map 03</a></li>
-                                    <li><a href="half-map-list-1.html">Job Search on Map 04</a></li>
-                                    <li><a href="half-map-list-2.html">Job Search on Map 05</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="JavaScript:Void(0);">Browse Candidate<span
-                                        class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="candidate-grid-1.html">Candidate Grid 01</a></li>
-                                    <li><a href="candidate-grid-2.html">Candidate Grid 02</a></li>
-                                    <li><a href="candidate-list-1.html">Candidate List 01</a></li>
-                                    <li><a href="candidate-list-2.html">Candidate List 02</a></li>
-                                    <li><a href="candidate-half-map.html">Candidate Half Map 01</a></li>
-                                    <li><a href="candidate-half-map-list.html">Candidate Half Map 02</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="JavaScript:Void(0);">Single job Detail<span
-                                        class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="single-layout-1.html">Single Layout 01</a></li>
-                                    <li><a href="single-layout-2.html">Single Layout 02</a></li>
-                                    <li><a href="single-layout-3.html">Single Layout 03</a></li>
-                                    <li><a href="single-layout-4.html">Single Layout 04</a></li>
-                                    <li><a href="single-layout-5.html">Single Layout 05<span
-                                                class="new-update">New</span></a></li>
-                                    <li><a href="single-layout-6.html">Single Layout 06<span
-                                                class="new-update">New</span></a></li>
-                                </ul>
-                            </li>
-                            <li><a href="JavaScript:Void(0);">Candidate Detail<span
-                                        class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="candidate-detail.html">Candidate Detail 01</a></li>
-                                    <li><a href="candidate-detail-2.html">Candidate Detail 02</a></li>
-                                    <li><a href="candidate-detail-3.html">Candidate Detail 03</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="advance-search.html">Advance Search</a></li>
-                            <li>
-                                <a href="/jobseeker">Candidate Dashboard<span
-                                        class="new-update">New</span></a>
-                            </li>
-                        </ul>
-                    </li>
 
-                    <li><a href="JavaScript:Void(0);">For Employer<span class="submenu-indicator"></span></a>
-                        <ul class="nav-dropdown nav-submenu">
-                            <li><a href="JavaScript:Void(0);">Explore Employers<span
-                                        class="submenu-indicator"></span></a>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="JavaScript:Void(0);">For Candidate<span class="submenu-indicator"></span></a>
                                 <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="/employer/employersearch1">Search Employers 01</a></li>
-                                    <li><a href="/employer/employersearch2">Search Employers 02</a></li>
-                                    <li><a href="/employer/employerlist">Search List Employers 01</a></li>
-                                    <li><a href="/employer/employersearchmap">Search Employers Map</a></li>
-                                    <li><a href="/employer/employersearchlistmap">Search List Employers Map</a></li>
+                                    <li><a href="/job/job-list">Browse Jobs<span class="submenu-indicator"></span></a>
+
+                                    </li>
+                                    <li><a href="JavaScript:Void(0);">Browse Map Jobs<span class="submenu-indicator"></span></a>
+                                        <ul class="nav-dropdown nav-submenu">
+                                            <li><a href="half-map.html">Job Search on Map 01</a></li>
+                                            <li><a href="half-map-2.html">Job Search on Map 02</a></li>
+                                            <li><a href="half-map-3.html">Job Search on Map 03</a></li>
+                                            <li><a href="half-map-list-1.html">Job Search on Map 04</a></li>
+                                            <li><a href="half-map-list-2.html">Job Search on Map 05</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="JavaScript:Void(0);">Browse Candidate<span
+                                                class="submenu-indicator"></span></a>
+                                        <ul class="nav-dropdown nav-submenu">
+                                            <li><a href="candidate-grid-1.html">Candidate Grid 01</a></li>
+                                            <li><a href="candidate-grid-2.html">Candidate Grid 02</a></li>
+                                            <li><a href="candidate-list-1.html">Candidate List 01</a></li>
+                                            <li><a href="candidate-list-2.html">Candidate List 02</a></li>
+                                            <li><a href="candidate-half-map.html">Candidate Half Map 01</a></li>
+                                            <li><a href="candidate-half-map-list.html">Candidate Half Map 02</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="JavaScript:Void(0);">Single job Detail<span
+                                                class="submenu-indicator"></span></a>
+                                        <ul class="nav-dropdown nav-submenu">
+                                            <li><a href="single-layout-1.html">Single Layout 01</a></li>
+                                            <li><a href="single-layout-2.html">Single Layout 02</a></li>
+                                            <li><a href="single-layout-3.html">Single Layout 03</a></li>
+                                            <li><a href="single-layout-4.html">Single Layout 04</a></li>
+                                            <li><a href="single-layout-5.html">Single Layout 05<span
+                                                        class="new-update">New</span></a></li>
+                                            <li><a href="single-layout-6.html">Single Layout 06<span
+                                                        class="new-update">New</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="JavaScript:Void(0);">Candidate Detail<span
+                                                class="submenu-indicator"></span></a>
+                                        <ul class="nav-dropdown nav-submenu">
+                                            <li><a href="candidate-detail.html">Candidate Detail 01</a></li>
+                                            <li><a href="candidate-detail-2.html">Candidate Detail 02</a></li>
+                                            <li><a href="candidate-detail-3.html">Candidate Detail 03</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="advance-search.html">Advance Search</a></li>
+                                    <li>
+                                        <a href="/jobseeker">Candidate Dashboard<span
+                                                class="new-update">New</span></a>
+                                    </li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="/employer/detail">Employer Detail</a>
+
+                            <li><a href="JavaScript:Void(0);">For Employer<span class="submenu-indicator"></span></a>
+                                <ul class="nav-dropdown nav-submenu">
+                                    <li><a href="JavaScript:Void(0);">Explore Employers<span
+                                                class="submenu-indicator"></span></a>
+                                        <ul class="nav-dropdown nav-submenu">
+                                            <li><a href="/employer/employersearch1">Search Employers 01</a></li>
+                                            <li><a href="/employer/employersearch2">Search Employers 02</a></li>
+                                            <li><a href="/employer/employerlist">Search List Employers 01</a></li>
+                                            <li><a href="/employer/employersearchmap">Search Employers Map</a></li>
+                                            <li><a href="/employer/employersearchlistmap">Search List Employers Map</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="/employer/detail">Employer Detail</a>
+                                    </li>
+                                    <li>
+                                        <a href="/employer/dashboard">Employer Dashboard<span
+                                                class="new-update">New</span></a>
+                                    </li>
+                                </ul>
                             </li>
-                            <li>
-                                <a href="/employer/dashboard">Employer Dashboard<span
-                                        class="new-update">New</span></a>
-                            </li>
-                        </ul>
-                    </li>
+                        </c:otherwise>
+                    </c:choose>
 
                     <li><a href="JavaScript:Void(0);">Pages<span class="submenu-indicator"></span></a>
                         <ul class="nav-dropdown nav-submenu">
@@ -266,7 +351,7 @@
                                 </button>
                                 <div class="dropdown-menu pull-right animated flipInX">
                                     <div class="drp_menu_headr bg-primary">
-                                        <h4>Hi, Dhananjay</h4>
+                                        <h4>Hi, ${user.email}</h4>
                                         <div class="drp_menu_headr-right">
                                             <a href="${pageContext.request.contextPath}/logout" class="btn btn-whites">Logout</a>
                                         </div>
