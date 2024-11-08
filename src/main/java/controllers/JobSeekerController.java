@@ -82,7 +82,7 @@ public class JobSeekerController {
 
     // Lấy JobSeeker theo ID
     @GetMapping("/{id}")
-    public String getJobSeekerById(@PathVariable Long id, Model model) {
+    public String getJobSeekerById(@PathVariable Integer id, Model model) {
         Optional<JobSeeker> jobSeeker = jobSeekerService.getJobSeekerById(id);
         if (jobSeeker.isPresent()) {
             model.addAttribute("jobSeeker", jobSeeker.get());
@@ -101,7 +101,7 @@ public class JobSeekerController {
 
     // Cập nhật JobSeeker
     @PutMapping("/{id}")
-    public String updateJobSeeker(@PathVariable Long id, @ModelAttribute JobSeeker updatedJobSeeker, Model model) {
+    public String updateJobSeeker(@PathVariable Integer id, @ModelAttribute JobSeeker updatedJobSeeker, Model model) {
         Optional<JobSeeker> existingJobSeeker = jobSeekerService.getJobSeekerById(id);
         if (existingJobSeeker.isPresent()) {
             jobSeekerService.updateJobSeeker(id, updatedJobSeeker);
@@ -113,15 +113,9 @@ public class JobSeekerController {
 
     // Xóa JobSeeker theo ID
     @DeleteMapping("/{id}")
-    public String deleteJobSeeker(@PathVariable Long id) {
+    public String deleteJobSeeker(@PathVariable Integer id) {
         jobSeekerService.deleteJobSeeker(id);
         return "redirect:/jobseeker/index"; // Chuyển hướng sau khi xóa thành công
     }
-
-    
-    
-
-
-
 
 }
