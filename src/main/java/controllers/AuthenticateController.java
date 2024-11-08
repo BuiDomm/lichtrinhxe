@@ -47,6 +47,11 @@ public class AuthenticateController {
         }
     }
 
+    @GetMapping("/login") // Trang đăng nhập
+    public String login(Model model) {
+        return "authenticate/login"; // Trang đăng nhập
+    }
+
     @PostMapping("/forgotpass")
     public String handleForgotPass(@RequestParam String email, Model model, HttpSession session) throws MessagingException {
         String verificationCode = authenticateService.sendVerificationCode(email);
