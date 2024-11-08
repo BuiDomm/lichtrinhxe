@@ -59,7 +59,7 @@
 
         <!-- JSTL Dependency -->
         <dependency>
-            <groupId>javax.servlet</groupId>
+            <groupId>javax.servlet</groupId> 
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>

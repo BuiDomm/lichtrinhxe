@@ -110,7 +110,7 @@ public class Authenticate {
         Optional<Employer> employer = employerService.getEmployerByEmail(email);
 
         // Nếu cả JobSeeker và Employer đều không tồn tại
-        if (jobSeeker == null && employer.isEmpty()) {
+        if (jobSeeker == null && employer.isPresent()) {
             session.setAttribute("message", "Email not found in the system!");
             return "redirect:/forgotpass";
         }
