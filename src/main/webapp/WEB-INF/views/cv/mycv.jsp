@@ -27,6 +27,8 @@
         <link href="${pageContext.request.contextPath}/assets/css/themes.css" rel="stylesheet">
 
 
+
+
         <title>CV Builder</title>
     </head>
     <body>
@@ -201,13 +203,14 @@
                     RESET
                     <i class="fas fa-undo-alt"></i>
                 </button>
+                <input type="hidden" id="jobSeekerId" value="${sessionScope.user.id}">
                 <button
                     class="btn btn-primary action-btn"
                     id="save-btn"
                     aria-label="Save Cv"
                     >
-                    SAVE
-                    <i class="far fa-save"></i>
+                    UPDATE
+                   <i class="far fa-file-alt"></i>
                 </button>
                 <button
                     class="btn btn-primary action-btn"
@@ -279,6 +282,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/html2pdf.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/anchorme.min.js"></script>
-        <script src="${pageContext.request.contextPath}/assets/js/cvcreate.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/cvview.js"></script>
+
     </body>
 </html>

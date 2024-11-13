@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@Controller 
 @RequestMapping("/jobseeker")
 public class JobSeekerController {
 
@@ -117,10 +117,10 @@ public class JobSeekerController {
         jobSeekerService.deleteJobSeeker(id);
         return "redirect:/jobseeker/index"; // Chuyển hướng sau khi xóa thành công
     }
-    // Create CV Page 
-        @GetMapping("/createcv")
-    public String createcv(Model model) {
-        return "jobseeker/createcv"; //
-    }
+    
+
+
+    
+    
 
 }

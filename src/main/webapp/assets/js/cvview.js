@@ -20,39 +20,32 @@
     }
 
     //Display CV on page
-    function setContent(cvContent) {
-        let loadedCv = convertSavedData(cvContent);
+    function setContent(sections) {
+        let loadedCv = convertSavedData(sections);
         printable.html(loadedCv);
-        //Once CV is displayed, create buttons to add new elements and sortable functionality
         createNewElementButton();
         makeSortable();
-
-        console.log("content updated");
-    
+        console.log("Nội dung đã được cập nhật");
     }
 
     //Traversing JSON data, returns CV data as string of formatted HTML in an array
-    function convertSavedData(jsonCv) {
-        return jsonCv.map(function (section) {
-            switch (section.type) {
-                //Formatting data to html for info section
+    function convertSavedData(sections) {
+        return sections.map(section => {
+            let sectionContent = JSON.parse(section.sectionContent);  // Phân tích chuỗi JSON thành đối tượng
+            switch (section.sectionType) {
                 case "info":
-                    return infoToHtml(section);
-                    //Formatting data to html for listing section
+                    return infoToHtml(sectionContent);
                 case "listing":
-                    return listingToHtml(section);
-                    //Formatting data to html for single block section
+                    return listingToHtml(sectionContent);
                 case "single-block":
-                    return singleBlockToHtml(section);
-                    //Formatting data to html for three column section
+                    return singleBlockToHtml(sectionContent);
                 case "three-column":
-                    return threeColToHtml(section);
-                    //Other cases
+                    return threeColToHtml(sectionContent);
                 default:
-                    console.log("Unkown type", section.type);
+                    console.log("Loại không xác định:", section.sectionType);
                     return "";
             }
-        });
+        }).join("");
     }
 
     //Saving CV information to an array of Objects
@@ -98,28 +91,14 @@
     //Default arguments are used when a new section is created
 
     //Generate HTML for info sections, returns a string of HTML
-    function infoToHtml(
-            section = {
-            name: "Name",
-                    table1: {
-                    class: "info-table1",
-                            label: ["Label"],
-                            content: ["Information"],
-                    },
-                    table2: {
-                    class: "info-table2",
-                            label: ["Label"],
-                            content: ["Information"],
-                    },
-            }
-    ) {
+    function infoToHtml(section) {
         let dataTable1 = convertTableToHtml(section.table1);
         let dataTable2 = convertTableToHtml(section.table2);
         numOfSections++;
         return `<section class="section info deletable sortable break-after" id="section${numOfSections}">
-            <h2 contenteditable="true" class="text-center info-name">${
-                section.name
-                }</h2><div class="row">${dataTable1 + dataTable2}</div></section>`;
+            <h2 contenteditable="true" class="text-center info-name">${section.name}</h2>
+            <div class="row">${dataTable1 + dataTable2}</div>
+        </section>`;
     }
 
     //Generate HTML for tables in info sections, returns a string of HTML
@@ -148,57 +127,59 @@
     }
 
     //Generate HTML for single block sections
-    function singleBlockToHtml(
-            section = { title: "New Single Block", list: ["Description"] }
-    ) {
-        let htmlList = "";
-        for (j in section.list) {
-            htmlList += createSingleBlockItem(section.list[j]);
-        }
+    function singleBlockToHtml(section) {
+        let htmlList = section.list.map(item => createSingleBlockItem(item)).join('');
         numOfSections++;
         return `<section class="break-after section single-block deletable extendable sortable-list sortable" id="section${numOfSections}">
-<h3 contenteditable="true" class="section-heading single-block-title">${section.title}</h3>${htmlList}</section>`;
+            <h3 contenteditable="true" class="section-heading single-block-title">${section.title}</h3>${htmlList}
+        </section>`;
     }
 
     //Generate HTML for listing sections
-    function listingToHtml(
-            section = {
-            list: [
-            {
-            date: "Date",
-                    location: "Location",
-                    position: "Position",
-                    description: "Description",
-            },
-            ],
-                    title: "New Listing",
-            }
-    ) {
-        let htmlList = "";
-        for (j in section.list) {
-            htmlList += createListingItem(section.list[j]);
-        }
+    function listingToHtml(section) {
+        let htmlList = section.list.map(item => createListingItem(item)).join('');
         numOfSections++;
         return `<section class="section break-after listing deletable extendable sortable-list sortable" id="section${numOfSections}">
-    <h3 contenteditable="true" class="listing-title section-heading">${section.title}</h3>${htmlList}</section>`;
+            <h3 contenteditable="true" class="listing-title section-heading">${section.title}</h3>${htmlList}
+        </section>`;
     }
 
     //Generate HTML for three column sections
-    function threeColToHtml(
-            section = {
-            list: ["New Item", "New Item", "New Item"],
-                    title: "New Three Column Section",
-            }
-    ) {
-        let htmlList = "";
-
-        for (j in section.list) {
-            htmlList += createThreeColumnItem(section.list[j]);
-        }
+    function threeColToHtml(section) {
+        let htmlList = section.list.map(item => createThreeColumnItem(item)).join('');
         numOfSections++;
-        return `<section break-after class="section three-column deletable sortable" id="section${numOfSections}">
-        <h3 contenteditable="true" class="section-heading three-col-title">${section.title}</h3>
-        <div class="row three-column-list d-flex align-content-start flex-wrap extendable pl-2 pr-2 sortable-list">${htmlList}</div></section>`;
+        return `<section class="section three-column deletable sortable" id="section${numOfSections}">
+            <h3 contenteditable="true" class="section-heading three-col-title">${section.title}</h3>
+            <div class="row three-column-list d-flex align-content-start flex-wrap extendable pl-2 pr-2 sortable-list">${htmlList}</div>
+        </section>`;
+    }
+
+    function saveCvToServer() {
+        const jobSeekerId = document.getElementById("jobSeekerId").value;
+        const currentCv = saveCvToArray();
+
+        const sections = currentCv.map(section => ({
+                sectionType: section.type,
+                sectionContent: JSON.stringify(section)
+            }));
+
+        fetch("/cv/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                jobSeekerId: jobSeekerId,
+                sections: sections
+            }),
+        })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Phản hồi:", data);
+                    $("#save-alert").show("blind", 100);
+                    setTimeout(() => $("#save-alert").hide("blind", 100), 8000);
+                })
+                .catch(error => console.error("Lỗi khi lưu CV:", error));
     }
 
     /* Generate HTML for elements within sections
@@ -485,15 +466,6 @@
         $("#printable").removeClass(themeClasses).addClass(theme);
         $(".custom-header").removeClass(themeClasses).addClass(theme);
         usedTheme = theme;
-        if (theme === "theme-default") {
-            changeActiveNav($("#theme-default-link"));
-        } else if (theme === "theme-modern") {
-            changeActiveNav($("#theme-modern-link"));
-        } else if (theme === "theme-lavender") {
-            changeActiveNav($("#theme-lavender-link"));
-        } else if (theme === "theme-deco") {
-            changeActiveNav($("#theme-deco-link"));
-        }
     }
 
     $(document).ready(function () {
@@ -545,34 +517,17 @@
                     }
             );
         });
- $("#save-btn").click(function () {
-    const jobSeekerId = document.getElementById("jobSeekerId").value;
-    const currentCv = saveCvToArray(); // Collect sections as JSON
+//        $("#save-btn").click(function () {
+//            const jobSeekerId = document.getElementById("jobSeekerId").value;
+//            const currentCv = saveCvToArray(); // Collect sections as JSON
+//
+//            // Chuyển đổi `currentCv` thành danh sách đơn giản với `type` và `content` là chuỗi JSON
+//            const sections = currentCv.map(section => ({
+//                    type: section.type,
+//                    content: JSON.stringify(section) // Chuyển đổi toàn bộ phần thành JSON chuỗi
+//                }));
+//        })();
 
-    // Chuyển đổi `currentCv` thành danh sách đơn giản với `type` và `content` là chuỗi JSON
-    const sections = currentCv.map(section => ({
-        type: section.type,
-        content: JSON.stringify(section) // Chuyển đổi toàn bộ phần thành JSON chuỗi
-    }));
-
-    fetch("/cv/save", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            jobSeekerId: jobSeekerId,
-            sections: sections
-        }),
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log("Response:", data);
-        $("#save-alert").show("blind", 100);
-        setTimeout(() => $("#save-alert").hide("blind", 100), 8000);
-    })
-    .catch(error => console.error("Error saving CV:", error));
-});
 
 
 
@@ -598,23 +553,62 @@
             changeTheme("theme-default");
             localStorage.clear();
         });
-        
+
 
 
         //Fetch default CV data and display as formatted HTML
-        fetch("../assets/data/defaultcv.json")
-                .then((res) => res.json())
-                .then((data) => {
-                    defaultCv = data;
-                    // If no saved CV has been saved, set content to default CV
-                    if (!savedCv) {
-                        setContent(defaultCv);
-                    }
-                    // Set content to saved CV and theme
-                    else {
-                        setContent(savedCv);
+        function fetchCvData() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var cvId = urlParams.get("cvId");
+            console.log(cvId)
+       
+            fetch("/cv/get?cvId=" + cvId)
+                    .then(response => response.json())
+                    .then(data => {
+                        defaultCv = data;  // Lưu dữ liệu mặc định
+                console.log(data)
+                        if (!data.sections) {
+                            console.log("Không có CV lưu trữ sẵn");
+                            return;
+                        }
+
+                        // Tạo nội dung từ dữ liệu JSON
+                        setContent(data.sections);
+                        usedTheme = data.usedTheme || "theme-default";  // Nếu không có theme, đặt theme mặc định
                         changeTheme(usedTheme);
-                    }
-                });
+                    })
+                    .catch(error => console.log("Lỗi khi tải dữ liệu CV:", error));
+        }
+
+        $(document).ready(function () {
+            $("#save-alert").hide();
+            $("#new-section-buttons").hide();
+            $("#close-section").hide();
+            printable = $("#printable");
+
+            // Tải dữ liệu CV
+            fetchCvData();
+
+            // Sự kiện nút lưu
+            $("#save-btn").click(saveCvToServer);
+
+            $("#save-alert .close").click(function () {
+                $("#save-alert").hide("blind", 100);
+            });
+
+            $("#reset-btn").click(function () {
+                setContent(defaultCv.sections);  // Dùng dữ liệu mặc định khi reset
+                changeTheme("theme-default");
+            });
+        });
+
     });
+
+
+
 })();
+
+
+
+
+
